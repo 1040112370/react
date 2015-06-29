@@ -46,7 +46,7 @@ describe('ReactTestUtils', function() {
     });
 
     var shallowRenderer = ReactTestUtils.createRenderer();
-    shallowRenderer.render(<SomeComponent />, {});
+    shallowRenderer.render(<SomeComponent />);
 
     var result = shallowRenderer.getRenderOutput();
 
@@ -68,7 +68,7 @@ describe('ReactTestUtils', function() {
     });
 
     var shallowRenderer = ReactTestUtils.createRenderer();
-    shallowRenderer.render(<SomeComponent />, {});
+    shallowRenderer.render(<SomeComponent />);
     shallowRenderer.unmount();
 
     expect(componentWillUnmount).toBeCalled();
@@ -82,7 +82,7 @@ describe('ReactTestUtils', function() {
     });
 
     var shallowRenderer = ReactTestUtils.createRenderer();
-    shallowRenderer.render(<SomeComponent />, {});
+    shallowRenderer.render(<SomeComponent />);
 
     var result = shallowRenderer.getRenderOutput();
 
@@ -123,7 +123,7 @@ describe('ReactTestUtils', function() {
     });
 
     var shallowRenderer = ReactTestUtils.createRenderer();
-    shallowRenderer.render(<SomeComponent />, {});
+    shallowRenderer.render(<SomeComponent />);
     var result = shallowRenderer.getRenderOutput();
     expect(result.type).toBe('div');
     expect(result.props.children).toEqual([
@@ -131,7 +131,7 @@ describe('ReactTestUtils', function() {
       <span className="child2" />
     ]);
 
-    shallowRenderer.render(<SomeComponent aNew="prop" />, {});
+    shallowRenderer.render(<SomeComponent aNew="prop" />);
     var updatedResult = shallowRenderer.getRenderOutput();
     expect(updatedResult.type).toBe('a');
 
@@ -143,37 +143,97 @@ describe('ReactTestUtils', function() {
     expect(updatedResultCausedByClick.props.className).toBe('was-clicked');
   });
 
-  it('Test scryRenderedDOMComponentsWithClass with TextComponent', function() {
-    var renderedComponent = ReactTestUtils.renderIntoDocument(<div>Hello <span>Jim</span></div>);
+  it('can shallowly render components with contextTypes', function() {
+    var SimpleComponent = React.createClass({
+      contextTypes: {
+        name: React.PropTypes.string,
+      },
+      render: function() {
+        return <div />;
+      },
+    });
+
+    var shallowRenderer = ReactTestUtils.createRenderer();
+    shallowRenderer.render(<SimpleComponent />);
+    var result = shallowRenderer.getRenderOutput();
+    expect(result).toEqual(<div />);
+  });
+
+  it('can pass context when shallowly rendering', function() {
+    var SimpleComponent = React.createClass({
+      contextTypes: {
+        name: React.PropTypes.string,
+      },
+      render: function() {
+        return <div>{this.context.name}</div>;
+      },
+    });
+
+    var shallowRenderer = ReactTestUtils.createRenderer();
+    shallowRenderer.render(<SimpleComponent />, {
+        name: "foo",
+    });
+    var result = shallowRenderer.getRenderOutput();
+    expect(result).toEqual(<div>foo</div>);
+  });
+
+  it('can scryRenderedDOMComponentsWithClass with TextComponent', function() {
+    var Wrapper = React.createClass({
+      render: function() {
+        return <div>Hello <span>Jim</span></div>;
+      },
+    });
+    var renderedComponent = ReactTestUtils.renderIntoDocument(<Wrapper />);
     var scryResults = ReactTestUtils.scryRenderedDOMComponentsWithClass(
       renderedComponent,
-      'NonExistantClass'
+      'NonExistentClass'
     );
     expect(scryResults.length).toBe(0);
 
   });
 
-  it('traverses children in the correct order', function() {
-    var container = document.createElement('div');
+  it('can scryRenderedDOMComponentsWithClass with className contains \\n', function() {
+    var Wrapper = React.createClass({
+      render: function() {
+        return <div>Hello <span className={'x\ny'}>Jim</span></div>;
+      },
+    });
+    var renderedComponent = ReactTestUtils.renderIntoDocument(<Wrapper />);
+    var scryResults = ReactTestUtils.scryRenderedDOMComponentsWithClass(
+      renderedComponent,
+      'x'
+    );
+    expect(scryResults.length).toBe(1);
+  });
 
+  it('traverses children in the correct order', function() {
+    var Wrapper = React.createClass({
+      render: function() {
+        return <div>{this.props.children}</div>;
+      },
+    });
+
+    var container = document.createElement('div');
     React.render(
-      <div>
+      <Wrapper>
         {null}
         <div>purple</div>
-      </div>,
+      </Wrapper>,
       container
     );
     var tree = React.render(
-      <div>
+      <Wrapper>
         <div>orange</div>
         <div>purple</div>
-      </div>,
+      </Wrapper>,
       container
     );
 
     var log = [];
     ReactTestUtils.findAllInRenderedTree(tree, function(child) {
-      log.push(React.findDOMNode(child).textContent);
+      if (ReactTestUtils.isDOMComponent(child)) {
+        log.push(React.findDOMNode(child).textContent);
+      }
     });
 
     // Should be document order, not mount order (which would be purple, orange)

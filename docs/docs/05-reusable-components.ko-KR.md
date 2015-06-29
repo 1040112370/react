@@ -6,7 +6,7 @@ prev: multiple-components-ko-KR.html
 next: transferring-props-ko-KR.html
 ---
 
-인터페이스를 설계할 때, 공통적으로 사용되는 디자인 요소들(버튼, 폼 필드, 레이아웃 컴포넌트 등)을 잘 정의된 인터페이스의 재사용 가능한 컴포넌트로 분해합니다. 이런 방법으로 다음에 UI를 구축할 때에는 훨씬 적은 코드로 만들 수 있습니다. 이 말은 더 빠른 개발 시간, 더 적은 버그, 더 적은 용량으로 할 수 있다는 뜻이죠.
+인터페이스를 설계할 때, 공통적으로 사용되는 디자인 요소들(버튼, 폼 필드, 레이아웃 컴포넌트 등.)을 잘 정의된 인터페이스의 재사용 가능한 컴포넌트로 분해합니다. 이런 방법으로 다음에 UI를 구축할 때에는 훨씬 적은 코드로 만들 수 있습니다. 이 말은 더 빠른 개발 시간, 더 적은 버그, 더 적은 용량으로 할 수 있다는 뜻이죠.
 
 
 ## Prop 검증
@@ -98,7 +98,7 @@ var ComponentWithDefaultProps = React.createClass({
 
 ## Prop 전달하기: 단축
 
-React 컴포넌트의 흔히 그냥 기본 HTML을 확장해서 씁니다. 타이핑을 아끼기 위해 기저의 HTML 엘리먼트에 HTML 속성들을 단순히 복사하는 컴포넌트가 필요할 수도 있습니다. JSX의 _spread_ 문법을 사용하면 이렇게 할 수 있습니다.
+React 컴포넌트의 흔히 그냥 기본 HTML 엘리먼트를 확장해서 씁니다. 타이핑을 아끼기 위해 기저의 HTML 엘리먼트에 HTML 속성들을 단순히 복사하는 컴포넌트가 필요할 수도 있습니다. JSX의 _spread_ 문법을 사용하면 이렇게 할 수 있습니다.
 
 ```javascript
 var CheckLink = React.createClass({
@@ -139,7 +139,7 @@ var MyComponent = React.createClass({
 
 ## 믹스인
 
-컴포넌트는 React에서 코드를 재사용할 수 있는 최고의 방법이지만, 가끔 아주 다른 컴포넌트에서 공통 기능이 필요한 때도 있습니다. 이런 상황을 [공통된 관심사(cross-cutting concerns)](http://en.wikipedia.org/wiki/Cross-cutting_concern)라 부르며, React에서는 `mixins`으로 이 문제를 해결합니다.
+컴포넌트는 React에서 코드를 재사용할 수 있는 최고의 방법이지만, 가끔 아주 다른 컴포넌트에서 공통 기능이 필요한 때도 있습니다. 이런 상황을 [공통된 관심사(cross-cutting concerns)](https://en.wikipedia.org/wiki/Cross-cutting_concern)라 부르며, React에서는 `mixins`으로 이 문제를 해결합니다.
 
 예를 들어, 컴포넌트가 주기적으로 업데이트되길 원할 경우가 있습니다. `setInterval()`을 사용하면 쉽지만, 필요 없어지면 메모리를 아끼기 위해 주기를 꼭 취소해야 합니다. React는 컴포넌트가 막 생성거나 없어질 때를 [생명주기 메소드](/react/docs/working-with-the-browser-ko-KR.html#component-lifecycle)를 통해 알려줍니다. 이런 메소드들을 사용해서 컴포넌트가 사라질 때 자동으로 정리해주는 `setInterval()`를 제공해주는 간단한 믹스인을 만들어보겠습니다.
 
@@ -184,6 +184,7 @@ React.render(
 
 믹스인의 괜찮은 점은 컴포넌트가 여러 믹스인을 사용하고 여러 믹스인에서 같은 생명주기 메소드를 사용할 때(예를 들어, 여러 믹스인에서 컴포넌트가 사라질 때 뭔가 정리하려 한다면) 모든 생명주기 메소드들의 실행은 보장됩니다. 믹스인에 정의된 메소드은 컴포넌트의 메소드가 호출됨에 따라 믹스인이 나열된 순서대로 실행됩니다.
 
+<a name="es6-classes"></a>
 ## ES6 클래스
 
 React 클래스를 일반적인 JavaScript 클래스로 선언할 수도 있습니다. 다음의 예제는 ES6 클래스 문법을 사용합니다:
@@ -224,7 +225,7 @@ Counter.defaultProps = { initialCount: 0 };
 
 ### 자동 바인딩 안됨
 
-메소드는 일반 ES6 클래스와 동일한 시멘틱을 따릅니다. `this`를 인스턴스에 자동으로 바인딩하지 않는다는 이야기입니다. 명시적으로 `.bind(this)`나 화살표 함수(arrow function)을 사용하세요.
+메소드는 일반 ES6 클래스와 동일한 시멘틱을 따릅니다. `this`를 인스턴스에 자동으로 바인딩하지 않는다는 이야기입니다. 명시적으로 `.bind(this)`나 [화살표 함수(arrow function)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) `=>`를 사용하세요.
 
 ### 믹스인 안됨
 

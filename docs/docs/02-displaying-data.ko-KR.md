@@ -17,8 +17,8 @@ UI를 가지고 할 수 있는 가장 기초적인 것은 데이터를 표시하
 <html>
   <head>
     <title>Hello React</title>
-    <script src="http://fb.me/react-{{site.react_version}}.js"></script>
-    <script src="http://fb.me/JSXTransformer-{{site.react_version}}.js"></script>
+    <script src="https://fb.me/react-{{site.react_version}}.js"></script>
+    <script src="https://fb.me/JSXTransformer-{{site.react_version}}.js"></script>
   </head>
   <body>
     <div id="example"></div>
@@ -31,7 +31,7 @@ UI를 가지고 할 수 있는 가장 기초적인 것은 데이터를 표시하
 </html>
 ```
 
-문서의 나머지에서, 코드가 위와 같은 HTML 템플릿에 들어갔다고 가정하고 JavaScript 코드에만 집중할 것입니다. 위의 주석 부분을 다음과 같은 JavaScript 코드로 바꿔 보세요:
+문서의 나머지에서, 코드가 위와 같은 HTML 템플릿에 들어갔다고 가정하고 JavaScript 코드에만 집중할 것입니다. 위의 주석 부분을 다음과 같은 JSX 코드로 바꿔 보세요:
 
 ```javascript
 var HelloWorld = React.createClass({
@@ -65,7 +65,7 @@ setInterval(function() {
 
 ## 컴포넌트들은 함수와 같습니다
 
-React 컴포넌트들은 매우 단순합니다. 당신은 그것들을 `props` 와 `state` (이것들은 나중에 언급할 것입니다) 를 받고 HTML을 렌더링하는 단순한 함수들로 생각해도 됩니다. 그것들은 너무 단순하기 때문에, 그것들의 작동을 이해하는 것 또한 쉽게 만듭니다.
+React 컴포넌트들은 매우 단순합니다. 당신은 그것들을 `props` 와 `state` (이것들은 나중에 언급할 것입니다) 를 받고 HTML을 렌더링하는 단순한 함수들로 생각해도 됩니다. 이걸 염두하면, 컴포넌트의 작동을 이해하는 것도 쉽습니다.
 
 > 주의:
 >
@@ -82,11 +82,11 @@ React 컴포넌트들은 매우 단순합니다. 당신은 그것들을 `props` 
 
 **JSX는 당신으로 하여금 HTML 문법을 이용해 JavaScript 객체를 만들게 해줍니다.** React를 이용해 순수한 JavaScript 문법으로 링크를 만드려고 한다면, 코드는 다음과 같습니다:
 
-`React.createElement('a', {href: 'http://facebook.github.io/react/'}, '안녕하세요!')`
+`React.createElement('a', {href: 'https://facebook.github.io/react/'}, '안녕하세요!')`
 
 JSX를 이용하면:
 
-`<a href="http://facebook.github.io/react/">안녕하세요!</a>`
+`<a href="https://facebook.github.io/react/">안녕하세요!</a>`
 
 우리는 이것이 React 앱들을 만들기 쉽게 하고, 디자이너들이 이 문법을 더 선호하는 것을 발견했습니다, 하지만 모든 사람은 그들만의 선호하는 워크플로우가 있기 마련이므로, **JSX는 React를 사용하기 위해 필수적이지는 않습니다.**
 
@@ -94,7 +94,7 @@ JSX는 매우 작은 언어입니다. 그것을 배우고 싶다면, [JSX 깊게
 
 JSX는 HTML과 비슷하지만, 완전히 똑같지는 않습니다. [JSX의 실수하기 쉬운 부분들](/react/docs/jsx-gotchas-ko-KR.html)에 중요한 차이점들에 대해 설명되어 있습니다.
 
-JSX를 사용하기 시작하기 위한 가장 쉬운 방법은 브라우저에서 작동하는 `JSXTransformer`를 사용하는 것입니다. 우리는 이것을 프로덕션에서는 사용하지 않기를 강하게 권장하는 바입니다. 당신은 우리의 커맨드 라인 [react-tools](http://npmjs.org/package/react-tools) 패키지를 이용하여 미리 컴파일(precompile)해 사용할 수 있습니다.
+JSX를 사용하기 시작하기 위한 가장 쉬운 방법은 브라우저에서 작동하는 `JSXTransformer`를 사용하는 것입니다. 우리는 이것을 프로덕션에서는 사용하지 않기를 강하게 권장하는 바입니다. 당신은 우리의 커맨드 라인 [react-tools](https://www.npmjs.com/package/react-tools) 패키지를 이용하여 미리 컴파일(precompile)해 사용할 수 있습니다.
 
 
 ## JSX 없이 React 사용하기

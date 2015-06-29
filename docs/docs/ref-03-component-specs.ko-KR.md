@@ -10,16 +10,19 @@ next: tags-and-attributes-ko-KR.html
 
 `React.createClass()`를 호출하여 컴포넌트 클래스를 생성할 때, `render` 메소드를 포함한 명세 객체를 제공해야 합니다. 또한 필요한 경우 여기에서 설명하는 다른 생명주기 메소드를 명세 객체에 추가로 제공할 수 있습니다.
 
+> 주의:
+>
+> 그냥 JavaScript 클래스를 컴포넌트 클래스로 사용할 수도 있습니다. 이 클래스는 구현할 수 있는 메소드가 거의 같지만 약간의 차이가 있습니다. 차이에 관한 더 자세한 정보는 [ES6 클래스](/react/docs/reusable-components-ko-KR.html#es6-classes)를 읽어보세요.
 
 ### render
 
 ```javascript
-ReactComponent render()
+ReactElement render()
 ```
 
 `render()` 메소드는 필수 항목입니다.
 
-호출되면 `this.props`와 `this.state`를 토대로 하나의 자식 컴포넌트를 리턴합니다. 이 자식 컴포넌트는 네이티브 DOM 컴포넌트의 가상 표현 (`<div />`나 `React.DOM.div()` 등) 또는 직접 정의한 조합(composite) 컴포넌트가 될 수 있습니다.
+호출되면 `this.props`와 `this.state`를 토대로 하나의 자식 엘리먼트를 리턴합니다. 이 자식 엘리먼트는 네이티브 DOM 컴포넌트의 가상 표현 (`<div />`나 `React.DOM.div()` 등) 또는 직접 정의한 조합(composite) 컴포넌트가 될 수 있습니다.
 
 아무 것도 렌더링되지 않도록 하려면 `null`이나 `false`를 리턴합니다. React는 지금의 차이 비교 알고리즘이 작동할 수 있도록 내부적으로는 `<noscript>` 태그를 렌더링합니다. `null`이나 `false`를 리턴한 경우, `React.findDOMNode(this)`는 `null`을 리턴합니다.
 

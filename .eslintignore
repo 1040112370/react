@@ -1,9 +1,5 @@
 # We can probably lint these later but not important at this point
-src/vendor
-# eslint uses JSX* node types to determine if using JSX. esprima-fb still uses
-# XJS* nodes. When we fix that (https://github.com/facebook/esprima/pull/85) we
-# can enable linting the tests and fix those errors.
-src/**/__tests__/**
+src/shared/vendor
 # This should be enabled but that folder has too much in it that doesn't belong
 src/test
 test/the-files-to-test.generated.js
@@ -14,6 +10,7 @@ vendor/jasmine-jsreporter/
 # But not in docs/_js/examples/*
 docs/_js/*.js
 docs/js/
+docs/_site/
 # gems
 docs/vendor/bundle/
 # This should be more like examples/**/thirdparty/** but
@@ -22,7 +19,7 @@ examples/
 # Ignore built files.
 build/
 # react-codemod
-npm-react-codemod/test/
-npm-react-codemod/scripts/
-npm-react-codemod/build/
-npm-react-codemod/node_modules/
+packages/react-codemod/test/
+packages/react-codemod/scripts/
+packages/react-codemod/build/
+packages/react-codemod/node_modules/

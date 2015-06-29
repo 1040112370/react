@@ -30,7 +30,7 @@ describe('ReactComponentWithPureRenderMixin', function() {
       constructor(props, context) {
         super(props, context);
         this.state = {
-          color: 'green'
+          color: 'green',
         };
       }
 
@@ -70,7 +70,7 @@ describe('ReactComponentWithPureRenderMixin', function() {
       render: function() {
         renderCalls++;
         return <div />;
-      }
+      },
     });
 
     var instance = ReactTestUtils.renderIntoDocument(<PlasticWrap />);
@@ -118,7 +118,7 @@ describe('ReactComponentWithPureRenderMixin', function() {
       render: function() {
         renderCalls++;
         return <div />;
-      }
+      },
     });
 
     var instance = ReactTestUtils.renderIntoDocument(<Component />);

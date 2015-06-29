@@ -36,12 +36,13 @@ next: thinking-in-react-ko-KR.html
 
 ```html
 <!-- index.html -->
+<!DOCTYPE html>
 <html>
   <head>
     <title>Hello React</title>
-    <script src="http://fb.me/react-{{site.react_version}}.js"></script>
-    <script src="http://fb.me/JSXTransformer-{{site.react_version}}.js"></script>
-    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/{{site.react_version}}/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/{{site.react_version}}/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   </head>
   <body>
     <div id="content"></div>
@@ -88,6 +89,8 @@ React.render(
 );
 ```
 
+네이티브 HTML 엘리먼트 이름은 소문자로 시작하고 커스텀 React 클래스 이름은 대문자로 시작합니다.
+
 #### JSX 문법
 
 JavsScript 안의 유사 XML 구문이 먼저 눈에 띌 것입니다. 우리에겐 이를 JavaScript로 변환해주는 간단한 프리컴파일러(precompiler)가 있습니다.
@@ -123,7 +126,7 @@ JSX의 사용은 선택적이지만 JSX 문법이 일반 JavsScript보다 사용
 
 ## 컴포넌트 조합하기
 
-이제 `CommentList`와 `CommentForm`을 위한 뼈대를 구축해 봅시다. 이전과 마찬가지로 단순히 `<div>` 태그 하나 입니다.
+이제 `CommentList`와 `CommentForm`을 위한 뼈대를 구축해 봅시다. 이전과 마찬가지로 단순히 `<div>` 태그 하나 입니다. 파일에 두 컴포넌트를 추가해, 이미 있는 `CommentBox` 선언을 참고로 `React.render`를 호출합시다.
 
 ```javascript
 // tutorial2.js
@@ -169,7 +172,7 @@ var CommentBox = React.createClass({
 
 ### props 사용하기
 
-부모로 부터 받은 데이터에 의존하는 `Comment` 컴포넌트를 만들어 봅시다. 부모 컴포넌트로 부터 받은 데이터는 자식 컴포넌트에서 '프로퍼티'로 사용가능 합니다.  이 '프로퍼티들'은 `this.props`를 통해 접근합니다.  props를 사용해 `CommentList`에서 전달받은 데이터를 읽어들이고, 마크업을 렌더할 수 있을 것입니다.
+부모로 부터 받은 데이터에 의존하는 `Comment` 컴포넌트를 만들어 봅시다. 부모 컴포넌트로 부터 받은 데이터는 자식 컴포넌트에서 '프로퍼티'로 사용가능 합니다.  이 '프로퍼티들'은 `this.props`를 통해 접근합니다.  props를 사용해, `CommentList`에서 전달받은 데이터를 읽어들이고, 마크업을 렌더할 수 있을 것입니다.
 
 
 ```javascript
@@ -214,24 +217,23 @@ var CommentList = React.createClass({
 
 Markdown은 텍스트를 포맷팅하는 간단한 방식입니다. 예를 들어, 별표(`*`)로 텍스트를 둘러싸는 것은 강조의 의미입니다.
 
-먼저 서드파티 라이브러리인 **Showdown**을 애플리케이션에 추가합니다. 이 JavaScript 라이브러리는 Markdown 텍스트를 HTML 문법으로 변환해줍니다. head 태그안에 스크립트 태그를 추가해 주세요. (React playground에는 이미 포함되어 있습니다):
+먼저 서드파티 라이브러리인 **marked**를 애플리케이션에 추가합니다. 이 JavaScript 라이브러리는 Markdown 텍스트를 HTML 문법으로 변환해줍니다. head 태그안에 스크립트 태그를 추가해 주세요. (React playground에는 이미 포함되어 있습니다):
 
 ```html{7}
 <!-- index.html -->
 <head>
   <title>Hello React</title>
-  <script src="http://fb.me/react-{{site.react_version}}.js"></script>
-  <script src="http://fb.me/JSXTransformer-{{site.react_version}}.js"></script>
-  <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/{{site.react_version}}/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/{{site.react_version}}/JSXTransformer.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
 </head>
 ```
 
 다음은, 댓글 텍스트를 Markdown으로 전환하고 출력해 봅시다.
 
-```javascript{2,10}
+```javascript{9}
 // tutorial6.js
-var converter = new Showdown.converter();
 var Comment = React.createClass({
   render: function() {
     return (
@@ -239,25 +241,24 @@ var Comment = React.createClass({
         <h2 className="commentAuthor">
           {this.props.author}
         </h2>
-        {converter.makeHtml(this.props.children.toString())}
+        {marked(this.props.children.toString())}
       </div>
     );
   }
 });
 ```
 
-우리가 한 일이라고는 Showdown 라이브러리를 호출한 것 뿐입니다. Showdown이 `this.props.children`에서 텍스트를 읽어들여 처리할 수 있도록 React 형식의 텍스트(React's wrapped text)를 단순 텍스트(raw string)으로 전환하기 위해 명시적으로 `toString()`을 호출했습니다.
+우리가 한 일이라고는 marked 라이브러리를 호출한 것 뿐입니다. marked가 `this.props.children`에서 텍스트를 읽어들여 처리할 수 있도록 React 형식의 텍스트(React's wrapped text)를 단순 텍스트(raw string)으로 전환하기 위해 명시적으로 `toString()`을 호출했습니다.
 
 하지만 여기엔 문제가 있습니다! 우리는 HTML 태그들이 정상적으로 렌더되길 원하지만 브라우저에 출력된 결과물은 "`<p>``<em>`또 다른`</em>` 댓글입니다`</p>`"처럼 태그가 그대로 보일것입니다.
 
-React는 이런 식으로 XSS 공격을 예방합니다. 우회할 방법이 있긴 하지만 프레임워크는 사용하지 않도록 경고하고 있습니다:
+React는 이런 식으로 [XSS 공격](https://en.wikipedia.org/wiki/Cross-site_scripting)을 예방합니다. 우회할 방법이 있긴 하지만 프레임워크는 사용하지 않도록 경고하고 있습니다:
 
-```javascript{5,11}
+```javascript{4,10}
 // tutorial7.js
-var converter = new Showdown.converter();
 var Comment = React.createClass({
   render: function() {
-    var rawMarkup = converter.makeHtml(this.props.children.toString());
+    var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
     return (
       <div className="comment">
         <h2 className="commentAuthor">
@@ -270,9 +271,9 @@ var Comment = React.createClass({
 });
 ```
 
-이는 의도적으로 생(raw) HTML을 넣기 힘들게 하려고 만든 특별한 API지만 Showdown을 사용하기 위해 이 백도어를 활용합시다.
+이는 의도적으로 생(raw) HTML을 넣기 힘들게 하려고 만든 특별한 API지만 marked를 사용하기 위해 이 백도어를 활용합시다.
 
-**잊지 마세요:** 이 기능은 Showdown이 안전한 것으로 믿고 사용하는 것입니다.
+**잊지 마세요:** 이 기능은 marked가 안전한 것으로 믿고 사용하는 것입니다. 이 경우, 소스에 있는 그대로 넘겨 주는 대신, 모든 HTML 마크업을 이스케이프하도록 marked에게 `sanitize: true`를 넘겨 주었습니다.
 
 ### 데이터 모델 연결하기
 
@@ -390,7 +391,7 @@ var CommentBox = React.createClass({
 
 주의: 우리의 앱이 AJAX 애플리케이션으로 변화하고 있기 때문에, 이제 파일 시스템의 파일을 참조하는 대신 웹서버를 사용하도록 앱을 개발해야 합니다. [위에서 언급한 바와 같이](#running-a-server), 우리는 튜토리얼의 나머지 부분에 필요한 기능을 제공하는 서버를 몇 가지 준비해 놓았습니다. [GitHub에 올려놓았으니](https://github.com/reactjs/react-tutorial) 확인해 보세요.
 
-```javascript{6-17}
+```javascript{6-18}
 // tutorial13.js
 var CommentBox = React.createClass({
   getInitialState: function() {
@@ -400,6 +401,7 @@ var CommentBox = React.createClass({
     $.ajax({
       url: this.props.url,
       dataType: 'json',
+      cache: false,
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
@@ -422,13 +424,14 @@ var CommentBox = React.createClass({
 
 여기서 `componentDidMount`는 컴포넌트가 렌더링 된 다음 React에 의해 자동으로 호출되는 메소드입니다. 동적 업데이트의 핵심은 `this.setState()`의 호출입니다. 우리가 이전의 댓글 목록을 서버에서 넘어온 새로운 목록으로 변경하면 자동으로 UI가 업데이트 될 것입니다. 이 반응성 덕분에 실시간 업데이트에 아주 작은 수정만 가해집니다. 우리는 여기선 간단한 폴링을 사용할 것이지만 웹소켓등의 다른 기술도 쉽게 사용할 수 있습니다.
 
-```javascript{3,14,19-20,34}
+```javascript{3,15,20-21,35}
 // tutorial14.js
 var CommentBox = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
+      cache: false,
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
@@ -528,13 +531,14 @@ React는 카멜케이스 네이밍 컨벤션으로 컴포넌트에 이벤트 핸
 
 자식 컴포넌트가 그의 부모에게 데이터를 넘겨줄 필요가 있습니다. 부모의 `render` 메소드에서 새로운 콜백(`handleCommentSubmit`)을 자식에게 넘겨주고, 자식의 `onCommentSubmit` 이벤트에 그것을 바인딩해주는 식으로 구현합니다. 이벤트가 작동될때(triggered)마다, 콜백이 호출됩니다:
 
-```javascript{15-17,30}
+```javascript{16-18,31}
 // tutorial17.js
 var CommentBox = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
+      cache: false,
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
@@ -596,13 +600,14 @@ var CommentForm = React.createClass({
 
 이제 콜백이 제자리를 찾았습니다. 우리가 할 일은 서버에 요청을 날리고 목록을 업데이트하는 것 뿐입니다:
 
-```javascript{16-27}
+```javascript{17-28}
 // tutorial19.js
 var CommentBox = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
+      cache: false,
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
@@ -648,13 +653,14 @@ var CommentBox = React.createClass({
 
 우리의 애플리케이션은 이제 모든 기능을 갖추었습니다. 하지만 댓글이 목록에 업데이트되기 전에 완료요청을 기다리는 게 조금 느린듯한 느낌이 드네요. 우리는 낙관적 업데이트를 통해 댓글이 목록에 추가되도록 함으로써 앱이 좀 더 빨라진 것처럼 느껴지도록 할 수 있습니다.
 
-```javascript{16-18}
+```javascript{17-19}
 // tutorial20.js
 var CommentBox = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
+      cache: false,
       success: function(data) {
         this.setState({data: data});
       }.bind(this),

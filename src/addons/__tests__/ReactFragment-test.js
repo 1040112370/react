@@ -25,9 +25,9 @@ describe('ReactFragment', function() {
     spyOn(console, 'error');
     var children = {
       x: <span />,
-      y: <span />
+      y: <span />,
     };
-    <div>{children}</div>;
+    void <div>{children}</div>;
     expect(console.error.calls.length).toBe(1);
     expect(console.error.calls[0].args[0]).toContain(
       'Any use of a keyed object'
@@ -35,9 +35,9 @@ describe('ReactFragment', function() {
     // Only warn once for the same set of children
     var sameChildren = {
       x: <span />,
-      y: <span />
+      y: <span />,
     };
-    <div>{sameChildren}</div>;
+    void <div>{sameChildren}</div>;
     expect(console.error.calls.length).toBe(1);
   });
 
@@ -46,7 +46,7 @@ describe('ReactFragment', function() {
     var children = {
       x: <span />,
       y: <span />,
-      z: <span />
+      z: <span />,
     };
     var element = <div>{[children]}</div>;
     expect(console.error.calls.length).toBe(0);
@@ -62,10 +62,10 @@ describe('ReactFragment', function() {
     spyOn(console, 'error');
     var children = {
       x: <span />,
-      y: <span />
+      y: <span />,
     };
     var frag = ReactFragment.create(children);
-    frag.x;
+    void frag.x;
     frag.y = 10;
     expect(console.error.calls.length).toBe(1);
     expect(console.error.calls[0].args[0]).toContain(

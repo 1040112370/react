@@ -18,8 +18,8 @@ Let's look at a really simple example. Create a `hello-react.html` file with the
 <html>
   <head>
     <title>Hello React</title>
-    <script src="http://fb.me/react-{{site.react_version}}.js"></script>
-    <script src="http://fb.me/JSXTransformer-{{site.react_version}}.js"></script>
+    <script src="https://fb.me/react-{{site.react_version}}.js"></script>
+    <script src="https://fb.me/JSXTransformer-{{site.react_version}}.js"></script>
   </head>
   <body>
     <div id="example"></div>
@@ -32,7 +32,7 @@ Let's look at a really simple example. Create a `hello-react.html` file with the
 </html>
 ```
 
-For the rest of the documentation, we'll just focus on the JavaScript code and assume it's inserted into a template like the one above. Replace the placeholder comment above with the following JS:
+For the rest of the documentation, we'll just focus on the JavaScript code and assume it's inserted into a template like the one above. Replace the placeholder comment above with the following JSX:
 
 ```javascript
 var HelloWorld = React.createClass({
@@ -66,7 +66,7 @@ The inputs to this component are called `props` — short for "properties". They
 
 ## Components are Just Like Functions
 
-React components are very simple. You can think of them as simple functions that take in `props` and `state` (discussed later) and render HTML. Because they're so simple, it makes them very easy to reason about.
+React components are very simple. You can think of them as simple functions that take in `props` and `state` (discussed later) and render HTML. With this in mind, components are easy to reason about.
 
 > Note:
 >
@@ -83,11 +83,11 @@ In order to make this easier, we've added a very simple, **optional** HTML-like 
 
 **JSX lets you create JavaScript objects using HTML syntax.** To generate a link in React using pure JavaScript you'd write:
 
-`React.createElement('a', {href: 'http://facebook.github.io/react/'}, 'Hello!')`
+`React.createElement('a', {href: 'https://facebook.github.io/react/'}, 'Hello!')`
 
 With JSX this becomes:
 
-`<a href="http://facebook.github.io/react/">Hello!</a>`
+`<a href="https://facebook.github.io/react/">Hello!</a>`
 
 We've found this has made building React apps easier and designers tend to prefer the syntax, but everyone has their own workflow, so **JSX is not required to use React.**
 
@@ -95,7 +95,7 @@ JSX is very small. To learn more about it, see [JSX in depth](/react/docs/jsx-in
 
 JSX is similar to HTML, but not exactly the same. See [JSX gotchas](/react/docs/jsx-gotchas.html) for some key differences.
 
-The easiest way to get started with JSX is to use the in-browser `JSXTransformer`. We strongly recommend that you don't use this in production. You can precompile your code using our command-line [react-tools](http://npmjs.org/package/react-tools) package.
+The easiest way to get started with JSX is to use the in-browser `JSXTransformer`. We strongly recommend that you don't use this in production. You can precompile your code using our command-line [react-tools](https://www.npmjs.com/package/react-tools) package.
 
 
 ## React without JSX
@@ -109,7 +109,7 @@ var root = React.createElement('ul', { className: 'my-list' }, child1, child2);
 React.render(root, document.getElementById('example'));
 ```
 
-As a convenience you can create short-hand factory functions to create elements from custom components.
+For convenience, you can create short-hand factory functions to create elements from custom components.
 
 ```javascript
 var Factory = React.createFactory(ComponentClass);

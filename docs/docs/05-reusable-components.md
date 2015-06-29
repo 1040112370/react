@@ -6,7 +6,7 @@ prev: multiple-components.html
 next: transferring-props.html
 ---
 
-When designing interfaces, break down the common design elements (buttons, form fields, layout components, etc) into reusable components with well-defined interfaces. That way, the next time you need to build some UI you can write much less code, which means faster development time, fewer bugs, and fewer bytes down the wire.
+When designing interfaces, break down the common design elements (buttons, form fields, layout components, etc.) into reusable components with well-defined interfaces. That way, the next time you need to build some UI, you can write much less code. This means faster development time, fewer bugs, and fewer bytes down the wire.
 
 
 ## Prop Validation
@@ -100,7 +100,7 @@ The result of `getDefaultProps()` will be cached and used to ensure that `this.p
 
 ## Transferring Props: A Shortcut
 
-A common type of React component is one that extends a basic HTML in a simple way. Often you'll want to copy any HTML attributes passed to your component to the underlying HTML element to save typing. You can use the JSX _spread_ syntax to achieve this:
+A common type of React component is one that extends a basic HTML element in a simple way. Often you'll want to copy any HTML attributes passed to your component to the underlying HTML element to save typing. You can use the JSX _spread_ syntax to achieve this:
 
 ```javascript
 var CheckLink = React.createClass({
@@ -142,7 +142,7 @@ var MyComponent = React.createClass({
 
 ## Mixins
 
-Components are the best way to reuse code in React, but sometimes very different components may share some common functionality. These are sometimes called [cross-cutting concerns](http://en.wikipedia.org/wiki/Cross-cutting_concern). React provides `mixins` to solve this problem.
+Components are the best way to reuse code in React, but sometimes very different components may share some common functionality. These are sometimes called [cross-cutting concerns](https://en.wikipedia.org/wiki/Cross-cutting_concern). React provides `mixins` to solve this problem.
 
 One common use case is a component wanting to update itself on a time interval. It's easy to use `setInterval()`, but it's important to cancel your interval when you don't need it anymore to save memory. React provides [lifecycle methods](/react/docs/working-with-the-browser.html#component-lifecycle) that let you know when a component is about to be created or destroyed. Let's create a simple mixin that uses these methods to provide an easy `setInterval()` function that will automatically get cleaned up when your component is destroyed.
 
@@ -227,7 +227,7 @@ Counter.defaultProps = { initialCount: 0 };
 
 ### No Autobinding
 
-Methods follow the same semantics as regular ES6 classes, meaning that they don't automatically bind `this` to the instance. You'll have to explicitly use `.bind(this)` or arrow functions.
+Methods follow the same semantics as regular ES6 classes, meaning that they don't automatically bind `this` to the instance. You'll have to explicitly use `.bind(this)` or [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) `=>`.
 
 ### No Mixins
 

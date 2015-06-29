@@ -1,6 +1,7 @@
 ---
 id: tutorial-ja-JP
 title: チュートリアル
+permalink: tutorial-ja-JP.html
 prev: getting-started-ja-JP.html
 next: thinking-in-react-ja-JP.html
 ---
@@ -35,12 +36,13 @@ next: thinking-in-react-ja-JP.html
 
 ```html
 <!-- index.html -->
+<!DOCTYPE html>
 <html>
   <head>
     <title>Hello React</title>
-    <script src="https://fb.me/react-{{site.react_version}}.js"></script>
-    <script src="https://fb.me/JSXTransformer-{{site.react_version}}.js"></script>
-    <script src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/{{site.react_version}}/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/{{site.react_version}}/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   </head>
   <body>
     <div id="content"></div>
@@ -218,9 +220,9 @@ Markdown はインラインでテキストをフォーマットする簡単な�
 <!-- index.html -->
 <head>
   <title>Hello React</title>
-  <script src="https://fb.me/react-{{site.react_version}}.js"></script>
-  <script src="https://fb.me/JSXTransformer-{{site.react_version}}.js"></script>
-  <script src="https://code.jquery.com/jquery-1.10.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/{{site.react_version}}/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/{{site.react_version}}/JSXTransformer.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
 </head>
 ```
@@ -387,7 +389,7 @@ var CommentBox = React.createClass({
 
 注意: ここからは AJAX アプリケーションを作っていくので、自分のファイルシステム上ではなく Web サーバを使ってアプリを作る必要があります。残りのチュートリアルに必要な機能は [冒頭で紹介した](#running-a-server) サーバに含まれています。ソースコードは [GitHub に](https://github.com/reactjs/react-tutorial/)用意してあります。
 
-```javascript{6-17}
+```javascript{6-18}
 // tutorial13.js
 var CommentBox = React.createClass({
   getInitialState: function() {
@@ -397,6 +399,7 @@ var CommentBox = React.createClass({
     $.ajax({
       url: this.props.url,
       dataType: 'json',
+      cache: false,
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
@@ -419,13 +422,14 @@ var CommentBox = React.createClass({
 
 さて、`componentDidMount` はコンポーネントがレンダリングされたときに React が自動的に呼び出すメソッドです。動的な更新の鍵となるのは `this.setState()` の呼び出し方です。ここでは、古いコメントの配列をサーバから取ってきた新しい配列に置き換え、UI を自動的に更新させてみましょう。このような reactivity（反応性・柔軟性）のおかげで、リアルタイム更新を最小限にすることが出来ます。次のコードではシンプルなポーリングをしていますが、WebSockets や他の方法でも簡単に実現できます。
 
-```javascript{3,14,19-20,34}
+```javascript{3,15,20-21,35}
 // tutorial14.js
 var CommentBox = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
+      cache: false,
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
@@ -525,13 +529,14 @@ React がコンポーネントにイベントハンドラを登録する際は c
 
 ここでは子のコンポーネントから親に向かって、いつもとは逆方向にデータを返す必要があります。まず、親のコンポーネントに新しいコールバック関数（`handleCommentSubmit`）を定義します。続いて `render` メソッド内にある子のコンポーネントにコールバックを渡すことで、`onCommentSubmit` イベントとコールバックを結び付けています。こうすることで、イベントが発生するたびにコールバックが呼び出されます。
 
-```javascript{15-17,30}
+```javascript{16-18,31}
 // tutorial17.js
 var CommentBox = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
+      cache: false,
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
@@ -593,13 +598,14 @@ var CommentForm = React.createClass({
 
 こうしてコールバックが出来たので、あとはサーバにコメントを送信してリストをリフレッシュすれば完璧です。
 
-```javascript{16-27}
+```javascript{17-28}
 // tutorial19.js
 var CommentBox = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
+      cache: false,
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
@@ -645,13 +651,14 @@ var CommentBox = React.createClass({
 
 アプリケーションに必要な機能は一通り実装できました。しかし、フォームからコメントを送信しても、サーバからのレスポンスが来るまで自分のコメントはリストに載らないため、アプリの動作は遅く感じます。ここでは、送信したコメントをリストに先読みさせて、アプリの体感速度をアップさせましょう。
 
-```javascript{16-18}
+```javascript{17-19}
 // tutorial20.js
 var CommentBox = React.createClass({
   loadCommentsFromServer: function() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
+      cache: false,
       success: function(data) {
         this.setState({data: data});
       }.bind(this),

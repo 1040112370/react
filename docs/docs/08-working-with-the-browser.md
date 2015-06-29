@@ -13,7 +13,7 @@ React provides powerful abstractions that free you from touching the DOM directl
 
 React is so fast because it never talks to the DOM directly. React maintains a fast in-memory representation of the DOM. `render()` methods return a *description* of the DOM, and React can diff this description with the in-memory representation to compute the fastest way to update the browser.
 
-Additionally, React implements a full synthetic event system such that all event objects are guaranteed to conform to the W3C spec despite browser quirks, and everything bubbles consistently and in a performant way cross-browser. You can even use some HTML5 events in IE8!
+Additionally, React implements a full synthetic event system such that all event objects are guaranteed to conform to the W3C spec despite browser quirks, and everything bubbles consistently and efficiently across browsers. You can even use some HTML5 events in IE8!
 
 Most of the time you should stay within React's "faked browser" world since it's more performant and easier to reason about. However, sometimes you simply need to access the underlying API, perhaps to work with a third-party library like a jQuery plugin. React provides escape hatches for you to use the underlying DOM API directly.
 
@@ -105,12 +105,12 @@ _Mounted_ composite components also support the following methods:
 
 At Facebook, we support older browsers, including IE8. We've had polyfills in place for a long time to allow us to write forward-thinking JS. This means we don't have a bunch of hacks scattered throughout our codebase and we can still expect our code to "just work". For example, instead of seeing `+new Date()`, we can just write `Date.now()`. Since the open source React is the same as what we use internally, we've carried over this philosophy of using forward thinking JS.
 
-In addition to that philosophy, we've also taken the stance that we, as authors of a JS library, should not be shipping polyfills as a part of our library. If every library did this, there's a good chance you'd be sending down the same polyfill multiple times, which could be a sizable chunk of dead code. If your product needs to support older browsers, chances are you're already using something like [es5-shim](https://github.com/kriskowal/es5-shim).
+In addition to that philosophy, we've also taken the stance that we, as authors of a JS library, should not be shipping polyfills as a part of our library. If every library did this, there's a good chance you'd be sending down the same polyfill multiple times, which could be a sizable chunk of dead code. If your product needs to support older browsers, chances are you're already using something like [es5-shim](https://github.com/es-shims/es5-shim).
 
 
 ### Polyfills Needed to Support Older Browsers
 
-`es5-shim.js` from [kriskowal's es5-shim](https://github.com/kriskowal/es5-shim) provides the following that React needs:
+`es5-shim.js` from [kriskowal's es5-shim](https://github.com/es-shims/es5-shim) provides the following that React needs:
 
 * `Array.isArray`
 * `Array.prototype.every`
@@ -123,7 +123,7 @@ In addition to that philosophy, we've also taken the stance that we, as authors 
 * `String.prototype.split`
 * `String.prototype.trim`
 
-`es5-sham.js`, also from [kriskowal's es5-shim](https://github.com/kriskowal/es5-shim), provides the following that React needs:
+`es5-sham.js`, also from [kriskowal's es5-shim](https://github.com/es-shims/es5-shim), provides the following that React needs:
 
 * `Object.create`
 * `Object.freeze`

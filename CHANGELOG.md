@@ -1,3 +1,55 @@
+## 0.13.3 (May 8, 2015)
+
+### React Core
+
+#### New Features
+
+* Added `clipPath` element and attribute for SVG
+* Improved warnings for deprecated methods in plain JS classes
+
+#### Bug Fixes
+
+* Loosened `dangerouslySetInnerHTML` restrictions so `{__html: undefined}` will no longer throw
+* Fixed extraneous context warning with non-pure `getChildContext`
+* Ensure `replaceState(obj)` retains prototype of `obj`
+
+### React with Add-ons
+
+### Bug Fixes
+
+* Test Utils: Ensure that shallow rendering works when components define `contextTypes`
+
+
+## 0.13.2 (April 18, 2015)
+
+### React Core
+
+#### New Features
+
+* Added `strokeDashoffset`, `flexPositive`, `flexNegative` to the list of unitless CSS properties
+* Added support for more DOM properties:
+  * `scoped` - for `<style>` elements
+  * `high`, `low`, `optimum` - for `<meter>` elements
+  * `unselectable` - IE-specific property to prevent user selection
+
+#### Bug Fixes
+
+* Fixed a case where re-rendering after rendering null didn't properly pass context
+* Fixed a case where re-rendering after rendering with `style={null}` didn't properly update `style`
+* Update `uglify` dependency to prevent a bug in IE8
+* Improved warnings
+
+### React with Add-Ons
+
+#### Bug Fixes
+
+* Immutabilty Helpers: Ensure it supports `hasOwnProperty` as an object key
+
+### React Tools
+
+* Improve documentation for new options
+
+
 ## 0.13.1 (March 16, 2015)
 
 ### React Core
@@ -9,7 +61,7 @@
 
 ### React with Add-Ons
 
-### Bug Fixes
+#### Bug Fixes
 
 * TestUtils: Don't warn about `getDOMNode` for ES6 classes
 * TestUtils: Ensure wrapped full page components (`<html>`, `<head>`, `<body>`) are treated as DOM components
@@ -38,7 +90,7 @@
 
 #### New Features
 
-* Support for using ES6 classes to build React components; see the [v0.13.0 beta 1 notes](http://facebook.github.io/react/blog/2015/01/27/react-v0.13.0-beta-1.html) for details.
+* Support for using ES6 classes to build React components; see the [v0.13.0 beta 1 notes](https://facebook.github.io/react/blog/2015/01/27/react-v0.13.0-beta-1.html) for details.
 * Added new top-level API `React.findDOMNode(component)`, which should be used in place of `component.getDOMNode()`. The base class for ES6-based components will not have `getDOMNode`. This change will enable some more patterns moving forward.
 * Added a new top-level API `React.cloneElement(el, props)` for making copies of React elements – see the [v0.13 RC2 notes](/react/blog/2015/03/03/react-v0.13-rc2.html#react.cloneelement) for more details.
 * New `ref` style, allowing a callback to be used in place of a name: `<Photo ref={(c) => this._photo = c} />` allows you to reference the component with `this._photo` (as opposed to `ref="photo"` which gives `this.refs.photo`).
@@ -73,6 +125,12 @@
   * `es5` is the default.
   * `es3` restores the previous default behavior. An additional transform is added here to ensure the use of reserved words as properties is safe (eg `this.static` will become `this['static']` for IE8 compatibility).
 * The transform for the call spread operator has also been enabled.
+
+### JSXTransformer
+
+#### Breaking Changes
+
+* The return value of `transform` now contains `sourceMap` as a JS object already, not an instance of `SourceMapGenerator`.
 
 ### JSX
 
@@ -274,7 +332,7 @@
 
 #### New Features
 * Added warnings to help migrate towards descriptors
-* Made it possible to server render without React-related markup (`data-reactid`, `data-react-checksum`). This DOM will not be mountable by React. [Read the docs for `React.renderComponentToStaticMarkup`](http://facebook.github.io/react/docs/top-level-api.html#react.rendercomponenttostaticmarkup)
+* Made it possible to server render without React-related markup (`data-reactid`, `data-react-checksum`). This DOM will not be mountable by React. [Read the docs for `React.renderComponentToStaticMarkup`](https://facebook.github.io/react/docs/top-level-api.html#react.rendercomponenttostaticmarkup)
 * Added support for more attributes:
   * `srcSet` for `<img>` to specify images at different pixel ratios
   * `textAnchor` for SVG
@@ -286,7 +344,7 @@
 
 ### Addons
 
-* `update` function to deal with immutable data. [Read the docs](http://facebook.github.io/react/docs/update.html)
+* `update` function to deal with immutable data. [Read the docs](https://facebook.github.io/react/docs/update.html)
 
 ### react-tools
 * Added an option argument to `transform` function. The only option supported is `harmony`, which behaves the same as `jsx --harmony` on the command line. This uses the ES6 transforms from [jstransform](https://github.com/facebook/jstransform).
@@ -448,7 +506,7 @@
 
 ### React with Addons (New!)
 
-* Introduced a separate build with several "addons" which we think can help improve the React experience. We plan to deprecate this in the long-term, instead shipping each as standalone pieces. [Read more in the docs](http://facebook.github.io/react/docs/addons.html).
+* Introduced a separate build with several "addons" which we think can help improve the React experience. We plan to deprecate this in the long-term, instead shipping each as standalone pieces. [Read more in the docs](https://facebook.github.io/react/docs/addons.html).
 
 ### JSX
 
@@ -481,10 +539,10 @@
 * Switch from using `id` attribute to `data-reactid` to track DOM nodes. This allows you to integrate with other JS and CSS libraries more easily.
 * Support for more DOM elements and attributes (e.g., `<canvas>`)
 * Improved server-side rendering APIs. `React.renderComponentToString(<component>, callback)` allows you to use React on the server and generate markup which can be sent down to the browser.
-* `prop` improvements: validation and default values. [Read our blog post for details...](http://facebook.github.io/react/blog/2013/07/11/react-v0-4-prop-validation-and-default-values.html)
-* Support for the `key` prop, which allows for finer control over reconciliation. [Read the docs for details...](http://facebook.github.io/react/docs/multiple-components.html)
-* Removed `React.autoBind`. [Read our blog post for details...](http://facebook.github.io/react/blog/2013/07/02/react-v0-4-autobind-by-default.html)
-* Improvements to forms. We've written wrappers around `<input>`, `<textarea>`, `<option>`, and `<select>` in order to standardize many inconsistencies in browser implementations. This includes support for `defaultValue`, and improved implementation of the `onChange` event, and circuit completion. [Read the docs for details...](http://facebook.github.io/react/docs/forms.html)
+* `prop` improvements: validation and default values. [Read our blog post for details...](https://facebook.github.io/react/blog/2013/07/11/react-v0-4-prop-validation-and-default-values.html)
+* Support for the `key` prop, which allows for finer control over reconciliation. [Read the docs for details...](https://facebook.github.io/react/docs/multiple-components.html)
+* Removed `React.autoBind`. [Read our blog post for details...](https://facebook.github.io/react/blog/2013/07/02/react-v0-4-autobind-by-default.html)
+* Improvements to forms. We've written wrappers around `<input>`, `<textarea>`, `<option>`, and `<select>` in order to standardize many inconsistencies in browser implementations. This includes support for `defaultValue`, and improved implementation of the `onChange` event, and circuit completion. [Read the docs for details...](https://facebook.github.io/react/docs/forms.html)
 * We've implemented an improved synthetic event system that conforms to the W3C spec.
 * Updates to your component are batched now, which may result in a significantly faster re-render of components. `this.setState` now takes an optional callback as it's second parameter. If you were using `onClick={this.setState.bind(this, state)}` previously, you'll want to make sure you add a third parameter so that the event is not treated as the callback.
 
